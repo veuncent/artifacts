@@ -12,6 +12,12 @@
     <UserSecretsId>aspnet-Artifacts-00893718-47b8-4749-a923-fde1db44e060</UserSecretsId>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Scripts\image-editing.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Styles\site.css" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.0.3" />
