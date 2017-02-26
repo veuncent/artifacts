@@ -15,7 +15,7 @@
   {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
-      "Styles/site.js"
+      "Scripts/site.js"
     ],
     "minify": {
       "enabled": true,
