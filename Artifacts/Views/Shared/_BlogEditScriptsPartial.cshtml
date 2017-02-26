@@ -1,0 +1,18 @@
+﻿<environment names="Development">
+    <script src="~/js/blog-editing.min.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/Jcrop/js/jquery.Jcrop.min.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="//cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"
+            asp-fallback-src="~/lib/ckeditor/ckeditor.js"
+            asp-fallback-test="window.CKEDITOR"
+            crossorigin="anonymous">
+    </script>
+    <script src="//jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"
+            asp-fallback-src="~/lib/Jcrop/js/jquery.Jcrop.min.js"
+            asp-fallback-test="window.Jcrop"
+            crossorigin="anonymous">
+    </script>
+    <script src="~/js/blog-editing.min.js"></script>
+</environment>

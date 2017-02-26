@@ -32,9 +32,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class=@(ViewBag.selectedItem == "index" ? "active" : "")>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class=@(ViewBag.selectedItem == "blog" ? "active" : "")>@Html.ActionLink("Blog posts", "Index", "BlogPosts")</li>
+                    <li class=@(ViewBag.selectedItem == "about" ? "active" : "")>@Html.ActionLink("About", "About", "Home")</li>
+                    <li class=@(ViewBag.selectedItem == "contact" ? "active" : "")>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

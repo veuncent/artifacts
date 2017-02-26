@@ -1,0 +1,32 @@
+﻿@model Artifacts.Models.ViewModels.BlogPostViewModel
+
+
+<div class="row image-editing-container image-border">
+    <h1 style="padding-left: 50px;">Thumbnail</h1>
+    <div class="row image-editing-row">
+        <div class="col-md-6 image-pane">
+            <h3>Original</h3>
+            <div id="original-pane">
+                <div id="original-image-container">
+                    <img id="original-image" class="image-border" style="" src="" alt="Image crop area" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 image-pane">
+            <h3 style="right: -280px; position: relative;">Thumbnail preview</h3>
+            <div id="preview-pane" class="image-border">
+                <div id="preview-container" class="preview-container">
+                    <img id="preview-image" src="" alt="Image preview" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-left: 50px; padding-bottom: 50px;">
+        <div class="col-md-1">
+            <input type="file" name="thumbnailBytesUpload" id="thumbnail-upload" onchange="initImages(this)" />
+        </div>
+    </div>
+</div>
+
+

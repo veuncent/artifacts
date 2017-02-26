@@ -1,0 +1,11 @@
+﻿@model Artifacts.Models.ViewModels.BlogPostViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+@Html.Partial("_BlogPostDetailsPartial")
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,27 @@
+﻿@model Artifacts.Models.ViewModels.BlogPostViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<form asp-controller="BlogPosts"
+      asp-action="Create"
+      asp-route-returnurl="@ViewData["ReturnUrl"]"
+      method="post"
+      enctype="multipart/form-data"
+      class="form-horizontal">
+
+    <h2>Edit</h2>
+    @Html.Partial("_BlogPostEditMain")
+
+</form>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_BlogEditScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_BlogEditStylePartial"); }
+}

@@ -1,0 +1,9 @@
+﻿<environment names="Development">
+    <link rel="stylesheet" href="~/lib/Jcrop/css/jquery.Jcrop.min.css" />
+    <link rel="stylesheet" href="~/css/image-editing.css" />
+</environment>
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="//jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.min.css"
+          asp-fallback-href="~/lib/Jcrop/css/jquery.Jcrop.min.css" />
+    <link rel="stylesheet" href="~/css/image-editing.css" />
+</environment>

@@ -1,0 +1,11 @@
+﻿@model Artifacts.Models.ViewModels.BlogPostViewModel
+
+
+@Html.TextAreaFor(x => x.Body, new { @id = "blogeditor", @class = "form-control" })
+@Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+
+<script>
+    // Replace the <textarea id="blogeditor"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('blogeditor');
+</script>
