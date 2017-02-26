@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  artifacts:
+    image: artifacts
+    build:
+      context: ./Artifacts
+      dockerfile: Dockerfile
