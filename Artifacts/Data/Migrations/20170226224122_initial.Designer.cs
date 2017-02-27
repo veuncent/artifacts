@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Artifacts.Data;
-using Artifacts.Models.Enums;
+using Artifacts.Models.Entities;
 
 namespace Artifacts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170226224122_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -100,17 +101,7 @@ namespace Artifacts.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ImageType");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlogPostImage");
-                });
-
-            modelBuilder.Entity("Artifacts.Models.Entities.BlogPostImageViewModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("AzureUrl");
 
                     b.Property<int>("ImageType");
 

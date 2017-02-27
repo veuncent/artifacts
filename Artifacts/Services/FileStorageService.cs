@@ -6,28 +6,48 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System.Threading.Tasks;
 using System.Collections;
 using System.IO;
+using Microsoft.Extensions.Configuration;
+using Artifacts.Configurations;
+using Artifacts.Models.Entities;
+using Artifacts.Models.Enums;
+using Microsoft.AspNetCore.Http;
+using Artifacts.Models.Enums;
 
 namespace Artifacts.Services
 {
-    public class FileStorageService
+    public interface IFileStorageService
+    {
+        void DeleteBlobItem(string containerName, string fileName);
+        byte[] DownloadBlobItem(string containerName, string fileName);
+        IEnumerable GetBlobItemListFromContainer(string containerName);
+        string GetEndpointUri();
+        Task<IEnumerable<IListBlobItem>> GetListOfBlobsInContainer(string containerName);
+        Task UploadOrOverwriteFile(string containerName, string fileName, byte[] bytes);
+        AzureContainerName GetContainerNameByImageType(ImageType imageType);
+        Task UploadOrOverwriteImage(BlogPostImage image, IFormFile file);
+    }
+
+    public class FileStorageService : IFileStorageService
     {
         private CloudStorageAccount _cloudStorageAccount;
         private CloudBlobClient _cloudBlobClient;
+        private readonly IConfiguration _config;
 
-        public FileStorageService()
+        public FileStorageService(IConfiguration config)
         {
+            _config = config;
             this._cloudStorageAccount = GetCloudStorageAccount();
             this._cloudBlobClient = GetCloudBlobClient();
         }
 
-        private static CloudStorageAccount GetCloudStorageAccount()
+        private CloudStorageAccount GetCloudStorageAccount()
         {
             return CloudStorageAccount.Parse(GetConnectionString());
         }
 
-        private static string GetConnectionString()
+        private string GetConnectionString()
         {
-            return Environment.ExpandEnvironmentVariables(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            return Environment.ExpandEnvironmentVariables(_config["AzureStorageConfig:StorageConnectionString"]);
         }
 
         private CloudBlobClient GetCloudBlobClient()
@@ -60,7 +80,7 @@ namespace Artifacts.Services
         }
 
 
-        public static string GetEndpointUri()
+        public string GetEndpointUri()
         {
             return GetCloudStorageAccount().FileEndpoint.AbsoluteUri;
         }
@@ -69,6 +89,16 @@ namespace Artifacts.Services
         {
             var blockBlobReference = GetBlockBlobReference(containerName, fileName);
             await blockBlobReference.UploadFromByteArrayAsync(bytes, 0, bytes.Length);
+        }
+
+        public async Task UploadOrOverwriteImage(BlogPostImage image, IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                file.OpenReadStream().CopyTo(memoryStream);
+                var azureContainerName = GetContainerNameByImageType(image.ImageType).ToString();
+                await UploadOrOverwriteFile(azureContainerName, image.Id.ToString(), memoryStream.ToArray());
+            }
         }
 
         public IEnumerable GetBlobItemListFromContainer(string containerName)
@@ -96,6 +126,21 @@ namespace Artifacts.Services
         {
             var blockBlob = GetBlockBlobReference(containerName, fileName);
             blockBlob.DeleteIfExistsAsync();
+        }
+
+        public AzureContainerName GetContainerNameByImageType(ImageType imageType)
+        {
+            switch (imageType)
+            {
+                case ImageType.BlogPostThumbnail:
+                    return AzureContainerName.Thumbnails;
+                case ImageType.BlogPostBanner:
+                    return AzureContainerName.Banners;
+                case ImageType.BlogPostBodyImage:
+                    return AzureContainerName.Images;
+                default:
+                    throw new NotImplementedException("ImageType not mapped to Azure container");
+            };
         }
     }
 }

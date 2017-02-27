@@ -15,10 +15,12 @@ namespace Artifacts.Controllers
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext _db;
+        private IFileStorageService _fileStorageService;
 
-        public BlogPostsController(ApplicationDbContext db)
+        public BlogPostsController(ApplicationDbContext db, IFileStorageService fileStorageService)
         {
             _db = db;
+            _fileStorageService = fileStorageService;
         }
 
         // GET: BlogPosts
@@ -30,8 +32,16 @@ namespace Artifacts.Controllers
             {
                 Id = bp.Id,
                 Body = bp.Body,
-                ThumbnailUrl = bp.Thumbnail.AzureUrl,
-                BannerUrl = bp.BannerImage.AzureUrl,
+                Thumbnail = new BlogPostImageViewModel(_fileStorageService)
+                {
+                    Id = bp.Thumbnail.Id,
+                    ImageType = bp.Thumbnail.ImageType
+                },
+                Banner = new BlogPostImageViewModel(_fileStorageService)
+                {
+                    Id = bp.BannerImage.Id,
+                    ImageType = bp.BannerImage.ImageType
+                },
                 Created = bp.Created,
                 Edited = bp.Edited,
                 Tags = bp.Tags,
@@ -53,8 +63,16 @@ namespace Artifacts.Controllers
                 Id = bp.Id,
                 Title = bp.Title,
                 Body = bp.Body,
-                ThumbnailUrl = bp.Thumbnail.AzureUrl,
-                BannerUrl = bp.BannerImage.AzureUrl,
+                Thumbnail = new BlogPostImageViewModel(_fileStorageService)
+                {
+                    Id = bp.Thumbnail.Id,
+                    ImageType = bp.Thumbnail.ImageType
+                },
+                Banner = new BlogPostImageViewModel(_fileStorageService)
+                {
+                    Id = bp.BannerImage.Id,
+                    ImageType = bp.BannerImage.ImageType
+                },
                 Created = bp.Created,
                 Edited = bp.Edited,
                 Tags = bp.Tags,
@@ -98,11 +116,7 @@ namespace Artifacts.Controllers
                 await _db.SaveChangesAsync();
                 if (thumbnailBytesUpload != null && thumbnailBytesUpload.Length > 0)
                 {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        thumbnailBytesUpload.OpenReadStream().CopyTo(memoryStream);
-                        await blogPost.Thumbnail.SaveImageAsync(memoryStream.ToArray());
-                    }
+                    await _fileStorageService.UploadOrOverwriteImage(blogPost.Thumbnail, thumbnailBytesUpload);
                 }
                 return RedirectToAction("Index");
             }
@@ -123,8 +137,15 @@ namespace Artifacts.Controllers
                 Id = bp.Id,
                 Title = bp.Title,
                 Body = bp.Body,
-                ThumbnailUrl = bp.Thumbnail.AzureUrl,
-                BannerUrl = bp.BannerImage.AzureUrl,
+                Thumbnail = new BlogPostImageViewModel(_fileStorageService) {
+                    Id = bp.Thumbnail.Id,
+                    ImageType = bp.Thumbnail.ImageType
+                },
+                Banner = new BlogPostImageViewModel(_fileStorageService)
+                {
+                    Id = bp.BannerImage.Id,
+                    ImageType = bp.BannerImage.ImageType
+                },
                 Created = bp.Created,
                 Edited = bp.Edited,
                 Tags = bp.Tags,
@@ -173,11 +194,7 @@ namespace Artifacts.Controllers
 
                 if (thumbnailBytesUpload != null && thumbnailBytesUpload.Length > 0)
                 {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        thumbnailBytesUpload.OpenReadStream().CopyTo(memoryStream);
-                        await blogPost.Thumbnail.SaveImageAsync(memoryStream.ToArray());
-                    }
+                    await _fileStorageService.UploadOrOverwriteImage(blogPost.Thumbnail, thumbnailBytesUpload);
                 }
 
                 return RedirectToAction("Index");

@@ -1,6 +1,7 @@
 ﻿using Artifacts.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Artifacts.Models.Enums;
 
 namespace Artifacts.Models.Entities
 {
@@ -37,7 +38,6 @@ namespace Artifacts.Models.Entities
 
         public void ViewModelToExistingEntity(BlogPostViewModel viewModel)
         {
-
             Id = viewModel.Id;
             Title = viewModel.Title;
             Body = viewModel.Body;
