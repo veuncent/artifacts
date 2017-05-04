@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.IO;
 using Microsoft.Extensions.Configuration;
-using Artifacts.Configurations;
 using Artifacts.Models.Entities;
 using Artifacts.Models.Enums;
 using Microsoft.AspNetCore.Http;
-using Artifacts.Models.Enums;
 
 namespace Artifacts.Services
 {

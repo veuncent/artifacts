@@ -7,6 +7,7 @@
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
     "Jcrop": "0.9.12",
-    "ckeditor": "4.6.2"
+    "ckeditor": "4.6.2",
+    "cvast-3dhop": "cvast/cvast-3dhop#2e1b04a841f0bfff986d641018360355ac2818fc"
   }
 }

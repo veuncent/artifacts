@@ -24,11 +24,11 @@ namespace Artifacts.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public override async Task<int> SaveChangesAsync()
-        {
-            AddTimestamps();
-            return await base.SaveChangesAsync();
-        }
+        //public override async Task<int> SaveChangesAsync()
+        //{
+        //    AddTimestamps();
+        //    return await base.SaveChangesAsync();
+        //}
 
         private void AddTimestamps()
         {
