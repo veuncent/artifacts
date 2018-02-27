@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Artifacts.Data;
 using Artifacts.Models;
 using Artifacts.Services;
+using Microsoft.AspNetCore.Identity;
 //using Artifacts.Configurations;
 
 namespace Artifacts
@@ -66,7 +67,7 @@ namespace Artifacts
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
